@@ -1,0 +1,24 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: chart-museum
+  namespace: chart-museum
+spec:
+  values:
+    replicaCount: 1
+    env:
+      existingSecret: chart-museum-secret
+      existingSecretMappings:
+        BASIC_AUTH_USER: username
+        BASIC_AUTH_PASS: password
+      open:
+        DISABLE_METRICS: false
+        DISABLE_API: false
+        AUTH_ANONYMOUS_GET: true
+    ingress:
+      enabled: true
+      hosts:
+        - name: chartmuseum.filthy.biz
+          tls: false
+          tlsSecret: null
